@@ -41,13 +41,5 @@ public class PurpleCube : MonoBehaviour
             purpleCube.transform.position = cellCenterPos + new Vector3Int(0, 1, -2);
         }
     }
-    // Update is called once per frame
-    void OnCollisionEnter(Collision collision)
-    {
-        if(collision.gameObject.name == "Player")
-        {
-            Debug.Log("COLLIDED");
-            player.transform.position = otherPurpleCube.transform.position + new Vector3 (0,-0.5f,1f);
-        }
-    }
+
 }

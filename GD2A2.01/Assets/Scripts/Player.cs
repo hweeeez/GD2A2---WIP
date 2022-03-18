@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public GameObject otherPurpleCube;
     private bool movePlayer = false;
-    private float speed = 4f;
+    private float speed = 2f;
     Animator animator;
     public Transform target;
     // Start is called before the first frame update
@@ -20,24 +21,30 @@ public class Player : MonoBehaviour
         Vector3 endPos = target.position + new Vector3(0, -0.5f, 1);
         if (Input.GetKeyDown(KeyCode.Return))
         {
+            animator.SetBool("Moving", true);
             movePlayer = true;
         
     }
         if (movePlayer)
         {
+            
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, endPos, step);
         }
+        else { animator.SetBool("Moving", false); }
     }
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Red")
         {
-            Debug.Log("COLLIDED");
             animator.SetTrigger("Death");
             StartCoroutine(DeathAnim());
-
+        }
+        if (collision.gameObject.tag == "Purple")
+        {
+            Debug.Log("COLLIDED");
+            StartCoroutine(teleport());
         }
     }
     IEnumerator DeathAnim()
@@ -45,4 +52,14 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(4f);
         Destroy(this.gameObject);
 }
+    IEnumerator teleport()
+    {
+        movePlayer = false;
+        animator.SetTrigger("Jump");
+        yield return new WaitForSeconds(1.4f);
+        this.transform.position = otherPurpleCube.transform.position + new Vector3(0, -0.5f, 1f);
+        animator.GetComponent<Animator>().ResetTrigger("Jump");
+        movePlayer = true;
+
+    }
 }
