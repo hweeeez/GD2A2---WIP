@@ -7,6 +7,7 @@ TagManager:
   - Red
   - Blue
   - Purple
+  - Cube
   layers:
   - Default
   - TransparentFX

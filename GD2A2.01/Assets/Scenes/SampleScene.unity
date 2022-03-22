@@ -1833,11 +1833,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 062675b2d34ed3a4bbf07cff5d69a999, type: 3}
---- !u!1 &518403094 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
-  m_PrefabInstance: {fileID: 891314865}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &519100773 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1882664732930762158, guid: 062675b2d34ed3a4bbf07cff5d69a999, type: 3}
@@ -3138,6 +3133,10 @@ PrefabInstance:
     - target: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_TagString
+      value: Cube
       objectReference: {fileID: 0}
     - target: {fileID: 5472579470841499854, guid: c32caee978b76fd45a315bea790eee92, type: 3}
       propertyPath: tilemap
@@ -5098,10 +5097,88 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1882664732930762158, guid: 062675b2d34ed3a4bbf07cff5d69a999, type: 3}
   m_PrefabInstance: {fileID: 165898279}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1259405981
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_Name
+      value: WhiteCube (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_TagString
+      value: Cube
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499854, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: tilemap
+      value: 
+      objectReference: {fileID: 1601557070}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_RootOrder
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.33
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.22
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499855, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5895796375813777574, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: tilemap
+      value: 
+      objectReference: {fileID: 1601557070}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: c32caee978b76fd45a315bea790eee92, type: 3}
 --- !u!4 &1278131457 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1882664732930762158, guid: 062675b2d34ed3a4bbf07cff5d69a999, type: 3}
   m_PrefabInstance: {fileID: 349782457}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1281316477 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+  m_PrefabInstance: {fileID: 1259405981}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1305190750
 PrefabInstance:
@@ -7896,7 +7973,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Cubes:
   - {fileID: 1882664733058925585}
-  - {fileID: 518403094}
+  - {fileID: 1281316477}
   - {fileID: 1882664733949994095}
   isSelected: 0
   currentCube: 0
@@ -8802,6 +8879,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: RedCube
       objectReference: {fileID: 0}
+    - target: {fileID: 4034280335773290171, guid: baf1febb6e7020f42833ef2913075d9d, type: 3}
+      propertyPath: m_TagString
+      value: Cube
+      objectReference: {fileID: 0}
     - target: {fileID: 4034280335773290175, guid: baf1febb6e7020f42833ef2913075d9d, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -8923,6 +9004,10 @@ PrefabInstance:
     - target: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472579470841499851, guid: c32caee978b76fd45a315bea790eee92, type: 3}
+      propertyPath: m_TagString
+      value: Cube
       objectReference: {fileID: 0}
     - target: {fileID: 5472579470841499854, guid: c32caee978b76fd45a315bea790eee92, type: 3}
       propertyPath: tilemap
