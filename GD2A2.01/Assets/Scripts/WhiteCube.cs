@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class WhiteCube : MonoBehaviour
 {
+    public GameObject gameman;
+    private Undo undo;
     bool canLeft;
     bool canRight;
     bool canUp;
@@ -23,19 +25,19 @@ public class WhiteCube : MonoBehaviour
            Vector3 cellCenterPos = tilemap.GetCellCenterWorld(cubecell);
            whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, 0);
        }*/
+    private void AddCommand(Command command)
+    {
+        var idx = undo.ExecuteCommand(command);
 
+    }
     private void Start()
     {
+        undo = gameman.GetComponent<Undo>();
         cubes = GameObject.FindGameObjectsWithTag("Cube");
         cubePositions = new Vector3[cubes.Length];
     }
     public void Update()
     {
-        for (int i = 0; i < cubes.Length; i++)
-        {
-            cubePositions[i] = cubes[i].transform.position;
-
-        }
 
         cubecell = tilemap.WorldToCell(transform.position);
         Vector3 cellCenterPos = tilemap.GetCellCenterWorld(cubecell);
@@ -50,22 +52,30 @@ public class WhiteCube : MonoBehaviour
         for (int i = 0; i < cubes.Length; i++)
         {
             cubePositions[i] = cubes[i].transform.position;
-            if (cubePositions[i] != moveleft) { canLeft = true; } else { canLeft = false; }
-            if (cubePositions[i] != moveRight) { canRight = true; } else { canRight = false; }
-            if (cubePositions[i] != moveUp) { canUp = true; } else { canUp = false; }
-            if (cubePositions[i] != moveDown) { canDown = true; } else { canDown = false; }
-
 
         }
+        canLeft = true;
+        canRight = true;
+        canUp = true;
+        canDown = true;
+        for (int i = 0; i < cubes.Length; i++)
+        {
+            if (Vector3.Distance(cubePositions[i], moveUp) < 0.0001) { canUp = false; }
+            if (Vector3.Distance(cubePositions[i], moveDown) < 0.0001) { canDown = false; }
+            if (Vector3.Distance(cubePositions[i], moveRight) < 0.0001) { canRight = false; }
+            if (Vector3.Distance(cubePositions[i], moveleft) < 0.0001) { canLeft = false; }
+        }
+        
         /*  if (hitColliders.Length > 0)
           {
               print("bump");
           }*/
-      
+
 
         if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
         {
             whiteCube.transform.position = cellCenterPos + new Vector3Int(1, 1, 0);
+   
         }
         if (canRight && (Input.GetKeyDown(KeyCode.RightArrow)))
         {

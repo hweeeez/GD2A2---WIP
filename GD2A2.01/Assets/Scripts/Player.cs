@@ -62,4 +62,5 @@ public class Player : MonoBehaviour
         movePlayer = true;
 
     }
+    
 }
