@@ -43,7 +43,7 @@ public class SelectController : MonoBehaviour
                     currentCube = Cubes.Length - 1;
                 }
             }
-         
+
         }
         Cube = Cubes[currentCube];
         Cube.GetComponent<Outline>().enabled = true;

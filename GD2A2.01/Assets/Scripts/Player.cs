@@ -21,17 +21,17 @@ public class Player : MonoBehaviour
         Vector3 endPos = target.position + new Vector3(0, -0.5f, 1);
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            animator.SetBool("Moving", true);
+            animator.SetBool("Walking", true);
             movePlayer = true;
-        
-    }
+
+        }
         if (movePlayer)
         {
-            
+
             float step = speed * Time.deltaTime;
             transform.position = Vector3.MoveTowards(transform.position, endPos, step);
         }
-        else { animator.SetBool("Moving", false); }
+        else { animator.SetBool("Walking", false); }
     }
 
     void OnCollisionEnter(Collision collision)
@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     {
         yield return new WaitForSeconds(4f);
         Destroy(this.gameObject);
-}
+    }
     IEnumerator teleport()
     {
         movePlayer = false;
@@ -62,5 +62,5 @@ public class Player : MonoBehaviour
         movePlayer = true;
 
     }
-    
+
 }
