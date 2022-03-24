@@ -38,7 +38,7 @@ public class SelectController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.UpArrow))
             {
                 currentCube -= 1;
-                if (currentCube <= 0)
+                if (currentCube < 0)
                 {
                     currentCube = Cubes.Length - 1;
                 }

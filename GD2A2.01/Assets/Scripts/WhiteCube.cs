@@ -16,7 +16,7 @@ public class WhiteCube : MonoBehaviour
     public GameObject whiteCube;
     Vector3Int cubecell;
     public Tilemap tilemap;
-
+    Vector3[] positions;
     // Start is called before the first frame update
     /*   void Start()
        {
@@ -35,6 +35,7 @@ public class WhiteCube : MonoBehaviour
         undo = gameman.GetComponent<Undo>();
         cubes = GameObject.FindGameObjectsWithTag("Cube");
         cubePositions = new Vector3[cubes.Length];
+        positions =  new [] { new Vector3 ( -0.5f, 1, 4.5f ) , new Vector3 ( -0.5f, 1, 5.5f ),new Vector3 ( -0.5f, 1, 1.5f ), new Vector3 ( -0.5f, 1, 6.5f ), new Vector3 ( -0.5f, 1, 7.5f )  };
     }
     public void Update()
     {
@@ -65,14 +66,19 @@ public class WhiteCube : MonoBehaviour
             if (Vector3.Distance(cubePositions[i], moveRight) < 0.0001) { canRight = false; }
             if (Vector3.Distance(cubePositions[i], moveleft) < 0.0001) { canLeft = false; }
         }
-        
-        /*  if (hitColliders.Length > 0)
-          {
-              print("bump");
-          }*/
+        for (int i = 0; i < positions.Length; i++)
+        { if ( positions[i] != cubePositions[i])
+            {
+                print("empty");
+            }
+        }
+            /*  if (hitColliders.Length > 0)
+              {
+                  print("bump");
+              }*/
 
 
-        if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
+            if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
         {
             whiteCube.transform.position = cellCenterPos + new Vector3Int(1, 1, 0);
    
