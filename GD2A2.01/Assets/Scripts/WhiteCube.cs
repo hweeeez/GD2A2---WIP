@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class WhiteCube : MonoBehaviour
 {
+    public GameObject leftWall;
+    public GameObject rightWall;
+    public GameObject upWall;
+    public GameObject downWall;
+
     public GameObject gameman;
     private Undo undo;
     bool canLeft;
@@ -35,7 +40,7 @@ public class WhiteCube : MonoBehaviour
         undo = gameman.GetComponent<Undo>();
         cubes = GameObject.FindGameObjectsWithTag("Cube");
         cubePositions = new Vector3[cubes.Length];
-        positions =  new [] { new Vector3 ( -0.5f, 1, 4.5f ) , new Vector3 ( -0.5f, 1, 5.5f ),new Vector3 ( -0.5f, 1, 1.5f ), new Vector3 ( -0.5f, 1, 6.5f ), new Vector3 ( -0.5f, 1, 7.5f )  };
+        positions = new[] { new Vector3(-0.5f, 1, 4.5f), new Vector3(-0.5f, 1, 5.5f), new Vector3(-0.5f, 1, 1.5f), new Vector3(-0.5f, 1, 6.5f), new Vector3(-0.5f, 1, 7.5f) };
     }
     public void Update()
     {
@@ -45,7 +50,7 @@ public class WhiteCube : MonoBehaviour
         Vector3 thispos = this.transform.position;
         var hitColliders = Physics.OverlapSphere(thispos, 0.5f);
 
-        Vector3 moveleft = cellCenterPos + new Vector3Int(1, 1, 0);
+        Vector3 moveLeft = cellCenterPos + new Vector3Int(1, 1, 0);
         Vector3 moveRight = cellCenterPos + new Vector3Int(-1, 1, 0);
         Vector3 moveDown = cellCenterPos + new Vector3Int(0, 1, 1);
         Vector3 moveUp = cellCenterPos + new Vector3Int(0, 1, -1);
@@ -64,24 +69,29 @@ public class WhiteCube : MonoBehaviour
             if (Vector3.Distance(cubePositions[i], moveUp) < 0.0001) { canUp = false; }
             if (Vector3.Distance(cubePositions[i], moveDown) < 0.0001) { canDown = false; }
             if (Vector3.Distance(cubePositions[i], moveRight) < 0.0001) { canRight = false; }
-            if (Vector3.Distance(cubePositions[i], moveleft) < 0.0001) { canLeft = false; }
+            if (Vector3.Distance(cubePositions[i], moveLeft) < 0.0001) { canLeft = false; }
         }
-        for (int i = 0; i < positions.Length; i++)
+        print(rightWall.transform.position);
+        if (Vector3.Distance(leftWall.transform.position, moveLeft) < 0.0001) { canLeft = false; }
+        if (Vector3.Distance(rightWall.transform.position, moveRight) < 0.0001) { canRight = false; print("hitright"); }
+        if (Vector3.Distance(upWall.transform.position, moveUp) < 0.0001) { canUp = false; }
+        if (Vector3.Distance(downWall.transform.position, moveDown) < 0.0001) { canDown = false; }
+        /*for (int i = 0; i < positions.Length; i++)
         { if ( positions[i] != cubePositions[i])
             {
                 print("empty");
             }
-        }
-            /*  if (hitColliders.Length > 0)
-              {
-                  print("bump");
-              }*/
+        }*/
+        /*  if (hitColliders.Length > 0)
+          {
+              print("bump");
+          }*/
 
 
-            if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
+        if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
         {
             whiteCube.transform.position = cellCenterPos + new Vector3Int(1, 1, 0);
-   
+
         }
         if (canRight && (Input.GetKeyDown(KeyCode.RightArrow)))
         {
