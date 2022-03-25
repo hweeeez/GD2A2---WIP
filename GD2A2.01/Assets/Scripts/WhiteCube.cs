@@ -22,14 +22,7 @@ public class WhiteCube : MonoBehaviour
     Vector3Int cubecell;
     public Tilemap tilemap;
     Vector3[] positions;
-    // Start is called before the first frame update
-    /*   void Start()
-       {
-           Vector3 worldPos = whiteCube.transform.position;
-           cubecell = tilemap.WorldToCell(worldPos);
-           Vector3 cellCenterPos = tilemap.GetCellCenterWorld(cubecell);
-           whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, 0);
-       }*/
+
     private void AddCommand(Command command)
     {
         var idx = undo.ExecuteCommand(command);
@@ -68,16 +61,16 @@ public class WhiteCube : MonoBehaviour
         {
             if (Vector3.Distance(cubePositions[i], moveUp) < 0.0001) { canUp = false; }
             if (Vector3.Distance(cubePositions[i], moveDown) < 0.0001) { canDown = false; }
-            if (Vector3.Distance(cubePositions[i], moveRight) < 1.7) { canRight = false; } else {canRight = true; }
+            if (Vector3.Distance(cubePositions[i], moveRight) < 1.7) { canRight = false; } else { canRight = true; }
             if (Vector3.Distance(cubePositions[i], moveLeft) < 0.0001) { canLeft = false; }
         }
-   
+
         if ((leftWall.transform.position.x - moveLeft.x) < 0.0001) { canLeft = false; }
-        if ((rightWall.transform.position.x - moveRight.x)> 0.4) { canRight = false; } else { canRight = true; }
+        if ((rightWall.transform.position.x - moveRight.x) > 0.4) { canRight = false; } else { canRight = true; }
         if ((upWall.transform.position.z - moveUp.z) > 0.0001) { canUp = false; }
-        if ((downWall.transform.position.z- moveDown.z) < 0.0001) { canDown = false; }
+        if ((downWall.transform.position.z - moveDown.z) < 0.0001) { canDown = false; }
         /*for (int i = 0; i < positions.Length; i++)
-        { if ( positions[i] != cubePositions[i])
+        { if ( cubePositions[i])
             {
                 print("empty");
             }

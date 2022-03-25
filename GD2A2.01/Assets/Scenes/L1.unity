@@ -4475,6 +4475,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreenCube
       objectReference: {fileID: 0}
+    - target: {fileID: 5618285510393977972, guid: 5aa37e4efe796524b9f6e4c29c114f4d, type: 3}
+      propertyPath: m_TagString
+      value: Green
+      objectReference: {fileID: 0}
     - target: {fileID: 5618285510393977973, guid: 5aa37e4efe796524b9f6e4c29c114f4d, type: 3}
       propertyPath: tilemap
       value: 
