@@ -56,9 +56,11 @@ public class TutorialPrompts : MonoBehaviour
         leftArrow.SetActive(false);
         downArrow.SetActive(false);
         rightArrow.SetActive(false);
+        yield return new WaitForSeconds(1.5f);
+        spaceBar.SetActive(true);
         yield return new WaitForSeconds(2f);
         spaceBar.SetActive(false);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         enterKey.SetActive(true);
         yield return new WaitForSeconds(4f);
         enterKey.SetActive(false);

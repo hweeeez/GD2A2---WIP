@@ -36,15 +36,25 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Red")
-        {
-            animator.SetTrigger("Death");
-            StartCoroutine(DeathAnim());
-        }
-        if (collision.gameObject.tag == "Purple")
+        var multiTag = collision.gameObject.GetComponent<MultiTag>();
+
+        if (multiTag != null && multiTag.HasTag("Purple"))
         {
             Debug.Log("COLLIDED");
             StartCoroutine(teleport());
+        }
+        if (collision.gameObject.tag == "Green")
+        {
+            animator.SetTrigger("Win");
+            movePlayer = false;
+
+        }
+        
+        if (multiTag != null && multiTag.HasTag("Red"))
+        {
+            movePlayer = false; 
+            animator.SetTrigger("Death");
+            StartCoroutine(DeathAnim());
         }
     }
     IEnumerator DeathAnim()
@@ -57,7 +67,8 @@ public class Player : MonoBehaviour
         movePlayer = false;
         animator.SetTrigger("Jump");
         yield return new WaitForSeconds(1.4f);
-        this.transform.position = otherPurpleCube.transform.position + new Vector3(0, -0.5f, 1f);
+        this.transform.position = otherPurpleCube.transform.position + new Vector3(0, -0.5f, -1f);
+        yield return new WaitForSeconds(1f);
         animator.GetComponent<Animator>().ResetTrigger("Jump");
         movePlayer = true;
 

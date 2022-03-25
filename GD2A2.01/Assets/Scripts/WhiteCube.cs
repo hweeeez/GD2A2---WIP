@@ -68,14 +68,14 @@ public class WhiteCube : MonoBehaviour
         {
             if (Vector3.Distance(cubePositions[i], moveUp) < 0.0001) { canUp = false; }
             if (Vector3.Distance(cubePositions[i], moveDown) < 0.0001) { canDown = false; }
-            if (Vector3.Distance(cubePositions[i], moveRight) < 0.0001) { canRight = false; }
+            if (Vector3.Distance(cubePositions[i], moveRight) < 1.7) { canRight = false; } else {canRight = true; }
             if (Vector3.Distance(cubePositions[i], moveLeft) < 0.0001) { canLeft = false; }
         }
-        print(rightWall.transform.position);
-        if (Vector3.Distance(leftWall.transform.position, moveLeft) < 0.0001) { canLeft = false; }
-        if (Vector3.Distance(rightWall.transform.position, moveRight) < 0.0001) { canRight = false; print("hitright"); }
-        if (Vector3.Distance(upWall.transform.position, moveUp) < 0.0001) { canUp = false; }
-        if (Vector3.Distance(downWall.transform.position, moveDown) < 0.0001) { canDown = false; }
+   
+        if ((leftWall.transform.position.x - moveLeft.x) < 0.0001) { canLeft = false; }
+        if ((rightWall.transform.position.x - moveRight.x)> 0.4) { canRight = false; } else { canRight = true; }
+        if ((upWall.transform.position.z - moveUp.z) > 0.0001) { canUp = false; }
+        if ((downWall.transform.position.z- moveDown.z) < 0.0001) { canDown = false; }
         /*for (int i = 0; i < positions.Length; i++)
         { if ( positions[i] != cubePositions[i])
             {
