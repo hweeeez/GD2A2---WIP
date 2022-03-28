@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -49,10 +50,10 @@ public class Player : MonoBehaviour
             movePlayer = false;
 
         }
-        
+
         if (multiTag != null && multiTag.HasTag("Red"))
         {
-            movePlayer = false; 
+            movePlayer = false;
             animator.SetTrigger("Death");
             StartCoroutine(DeathAnim());
         }
@@ -71,7 +72,11 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1f);
         animator.GetComponent<Animator>().ResetTrigger("Jump");
         movePlayer = true;
-
     }
 
+    private IEnumerator loadScene(string scene)
+    {
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene(scene);
+    }
 }
