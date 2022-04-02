@@ -10,6 +10,7 @@ TagManager:
   - Cube
   - HorizontalWalls
   - Green
+  - Clear
   layers:
   - Default
   - TransparentFX

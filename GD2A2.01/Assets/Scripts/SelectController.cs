@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class SelectController : MonoBehaviour
 {
+    private GameObject[] cubes;
+    private Vector3[] cubePositions;
+
+    private Vector3[] clearPositions;
+    private GameObject[] clearCubes;
     private Undo undo;
     private bool selecting = true;
     public GameObject[] Cubes;
@@ -14,17 +19,33 @@ public class SelectController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        clearCubes = GameObject.FindGameObjectsWithTag("Clear");
+        cubes = GameObject.FindGameObjectsWithTag("Cube");
+        clearPositions = new Vector3[clearCubes.Length];
+        cubePositions = new Vector3[Cubes.Length];
+
         undo = this.GetComponent<Undo>();
         Cube = Cubes[0];
         foreach (GameObject Cube in Cubes)
         {
             Cube.GetComponent<Outline>().enabled = false;
         }
+        for (int i = 0; i < clearCubes.Length; i++)
+        {
+            clearPositions[i] = clearCubes[i].transform.position;
+
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        for (int i = 0; i < Cubes.Length; i++)
+        {
+            cubePositions[i] = Cubes[i].transform.position;
+
+        }
+
         if (selecting)
         {
             if (Input.GetKeyDown(KeyCode.DownArrow))
