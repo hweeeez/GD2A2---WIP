@@ -43,7 +43,6 @@ public class SelectController : MonoBehaviour
         for (int i = 0; i < Cubes.Length; i++)
         {
             cubePositions[i] = Cubes[i].transform.position;
-
         }
 
         if (selecting)
