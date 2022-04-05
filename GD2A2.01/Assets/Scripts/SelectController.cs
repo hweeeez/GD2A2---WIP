@@ -40,10 +40,24 @@ public class SelectController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        bool atLeastOneCubeInClearPosition = false;
         for (int i = 0; i < Cubes.Length; i++)
         {
-            cubePositions[i] = Cubes[i].transform.position;
+            Vector3 cubePos = Cubes[i].transform.position;
+            for (int j = 0; j < clearPositions.Length; j++)
+            {
+                if (clearPositions[j] == cubePos)
+                {
+                    atLeastOneCubeInClearPosition = true;
+                    print("wrong!");
+
+                    break;
+                }
+            }
+            if (atLeastOneCubeInClearPosition) break;
+
         }
+        print(atLeastOneCubeInClearPosition);
 
         if (selecting)
         {
@@ -68,7 +82,7 @@ public class SelectController : MonoBehaviour
         Cube = Cubes[currentCube];
         Cube.GetComponent<Outline>().enabled = true;
         GameObject ChildGameObject = Cube.transform.GetChild(0).gameObject;
-        print(ChildGameObject);
+
         foreach (GameObject Cube in Cubes)
         {
             if (Cube != Cubes[currentCube])
