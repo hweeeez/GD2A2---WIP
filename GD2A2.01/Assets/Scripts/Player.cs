@@ -37,6 +37,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        print(collision.gameObject.name);
         var multiTag = collision.gameObject.GetComponent<MultiTag>();
 
         if (multiTag != null && multiTag.HasTag("Purple"))
@@ -69,7 +70,7 @@ public class Player : MonoBehaviour
         animator.SetTrigger("Jump");
         yield return new WaitForSeconds(1.4f);
         this.transform.position = otherPurpleCube.transform.position + new Vector3(0, -0.5f, -1f);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.2f);
         animator.GetComponent<Animator>().ResetTrigger("Jump");
         movePlayer = true;
     }

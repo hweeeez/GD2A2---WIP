@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-public class WhiteCube : MonoBehaviour
+public class SelectCube : MonoBehaviour
 {
     public GameObject leftWall;
     public GameObject rightWall;
@@ -21,23 +21,29 @@ public class WhiteCube : MonoBehaviour
     public GameObject whiteCube;
     Vector3Int cubecell;
     public Tilemap tilemap;
-    Vector3[] positions;
-
-    private void AddCommand(Command command)
+    GameObject[] go;
+    List<GameObject> barriers;
+    List<Vector3> barrierPos;
+    // Start is called before the first frame update
+    void Start()
     {
-        var idx = undo.ExecuteCommand(command);
-
+        
     }
-    private void Start()
-    {
-        undo = gameman.GetComponent<Undo>();
-        cubes = GameObject.FindGameObjectsWithTag("Cube");
-        cubePositions = new Vector3[cubes.Length];
-        //positions = new[] { new Vector3(-0.5f, 1, 4.5f), new Vector3(-0.5f, 1, 5.5f), new Vector3(-0.5f, 1, 1.5f), new Vector3(-0.5f, 1, 6.5f), new Vector3(-0.5f, 1, 7.5f) };
-    }
-    public void Update()
-    {
-        print(cubes.Length);
+
+    // Update is called once per frame
+    void Update()
+    { go = FindObjectsOfType(typeof(GameObject))as GameObject[];
+        foreach(GameObject go in go)
+        {
+            if (go.layer == 7)
+            {
+                barriers.Add(go);
+            }
+        }
+        foreach (GameObject go in barriers)
+        {
+            barrierPos.Add(go.transform.position);
+        }
         cubecell = tilemap.WorldToCell(transform.position);
         Vector3 cellCenterPos = tilemap.GetCellCenterWorld(cubecell);
         Vector3 thispos = this.transform.position;
@@ -48,35 +54,6 @@ public class WhiteCube : MonoBehaviour
         Vector3 moveDown = cellCenterPos + new Vector3Int(0, 1, 1);
         Vector3 moveUp = cellCenterPos + new Vector3Int(0, 1, -1);
         cubes = GameObject.FindGameObjectsWithTag("Cube");
-        for (int i = 0; i < cubes.Length; i++)
-        {
-            cubePositions[i] = cubes[i].transform.position;
-
-        }
-        canLeft = true;
-        canRight = true;
-        canUp = true;
-        canDown = true;
-        for (int i = 0; i < cubes.Length; i++)
-        {
-            if (Vector3.Distance(cubePositions[i], moveUp) < 0.0001) { canUp = false; }
-            if (Vector3.Distance(cubePositions[i], moveDown) < 0.0001) { canDown = false; }
-            if (Vector3.Distance(cubePositions[i], moveRight) < 0.0001) { canRight = false; } 
-            if (Vector3.Distance(cubePositions[i], moveLeft) < 0.0001) { canLeft = false; }
-        }
-
-        /*for (int i = 0; i < positions.Length; i++)
-        { if ( cubePositions[i])
-            {
-                print("empty");
-            }
-        }*/
-        /*  if (hitColliders.Length > 0)
-          {
-              print("bump");
-          }*/
-
-
         if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
         {
             whiteCube.transform.position = cellCenterPos + new Vector3Int(1, 1, 0);
@@ -95,6 +72,16 @@ public class WhiteCube : MonoBehaviour
             whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, -1);
         }
 
-
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if(collision.gameObject.name == "Platform")
+        {
+            print("cannot move");
+            canRight = false;
+            canDown = false;
+            canLeft = false;
+            canUp = false;
+        }
     }
 }
