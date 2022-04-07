@@ -16,6 +16,8 @@ public class SelectController : MonoBehaviour
     public bool isSelected;
     private GameObject Cube;
     public int currentCube;
+
+    public GameObject clearSFX;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,7 +51,7 @@ public class SelectController : MonoBehaviour
                 if (clearPositions[j] == cubePos)
                 {
                     atLeastOneCubeInClearPosition = true;
-                    print("wrong!");
+                    //  print("wrong!");
 
                     break;
                 }
@@ -57,8 +59,12 @@ public class SelectController : MonoBehaviour
             if (atLeastOneCubeInClearPosition) break;
 
         }
-        print(atLeastOneCubeInClearPosition);
-
+        bool clear = false;
+        if (!atLeastOneCubeInClearPosition && !clear)
+        {
+            clearSFX.SetActive(true);
+            clear = true;
+        }
         if (selecting)
         {
             if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -108,6 +114,8 @@ public class SelectController : MonoBehaviour
             int v = undo.UndoCommand();
         }
     }
+
+
     private void AddCommand(Command command)
     {
         var idx = undo.ExecuteCommand(command);

@@ -5,6 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public GameObject winSFX;
+
     public GameObject otherPurpleCube;
     private bool movePlayer = false;
     private float speed = 2f;
@@ -49,7 +51,7 @@ public class Player : MonoBehaviour
         {
             animator.SetTrigger("Win");
             movePlayer = false;
-
+            StartCoroutine(LoadNextLevel());
         }
 
         if (multiTag != null && multiTag.HasTag("Red"))
@@ -62,7 +64,10 @@ public class Player : MonoBehaviour
     IEnumerator DeathAnim()
     {
         yield return new WaitForSeconds(4f);
-        Destroy(this.gameObject);
+        this.transform.localScale = new Vector3(0f, 0f, 0f);
+        yield return new WaitForSeconds(0.4f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
     IEnumerator teleport()
     {
@@ -75,9 +80,11 @@ public class Player : MonoBehaviour
         movePlayer = true;
     }
 
-    private IEnumerator loadScene(string scene)
+    IEnumerator LoadNextLevel()
     {
-        yield return new WaitForSeconds(1.5f);
-        SceneManager.LoadScene(scene);
+        winSFX.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        //This will load the next scene in the buildIndex, e.g if in scene 3, go to scene 4
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
