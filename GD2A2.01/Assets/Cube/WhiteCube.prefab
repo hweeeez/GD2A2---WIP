@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5472579470841499850}
   - component: {fileID: 8943522789981625875}
   - component: {fileID: 5472579470841499854}
+  - component: {fileID: 8772171734114718867}
   m_Layer: 0
   m_Name: WhiteCube
   m_TagString: Untagged
@@ -125,6 +126,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilemap: {fileID: 0}
+--- !u!114 &8772171734114718867
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5472579470841499851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d512ac0030bda2a409f5900a2f2ac314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - MoveCube
 --- !u!1 &5895796375813777568
 GameObject:
   m_ObjectHideFlags: 0
@@ -168,5 +183,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8de9537730df93043bb872b3c4a2e995, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leftWall: {fileID: 0}
+  rightWall: {fileID: 0}
+  upWall: {fileID: 0}
+  downWall: {fileID: 0}
+  gameman: {fileID: 0}
   whiteCube: {fileID: 5472579470841499851}
   tilemap: {fileID: 0}

@@ -3,11 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectController : MonoBehaviour
+public class GameManager : MonoBehaviour
 {
     private GameObject[] cubes;
     private Vector3[] cubePositions;
-
+    private List<GameObject> moveCubes;
     private Vector3[] clearPositions;
     private GameObject[] clearCubes;
     private Undo undo;
@@ -31,6 +31,7 @@ public class SelectController : MonoBehaviour
         foreach (GameObject Cube in Cubes)
         {
             Cube.GetComponent<Outline>().enabled = false;
+
         }
         for (int i = 0; i < clearCubes.Length; i++)
         {
@@ -47,7 +48,11 @@ public class SelectController : MonoBehaviour
         {
             Vector3 cubePos = Cubes[i].transform.position;
             for (int j = 0; j < clearPositions.Length; j++)
-            {
+            {/*if(clearPositions[j] != cubePos)
+                {
+                    print("clear");
+                    StartCoroutine(clearPlay());
+                }*/
                 if (clearPositions[j] == cubePos)
                 {
                     atLeastOneCubeInClearPosition = true;
@@ -59,62 +64,37 @@ public class SelectController : MonoBehaviour
             if (atLeastOneCubeInClearPosition) break;
 
         }
-        bool clear = false;
-        if (!atLeastOneCubeInClearPosition && !clear)
-        {
-            clearSFX.SetActive(true);
-            clear = true;
-        }
-        if (selecting)
-        {
-            if (Input.GetKeyDown(KeyCode.DownArrow))
-            {
-                currentCube += 1;
-                if (currentCube == Cubes.Length)
-                {
-                    currentCube = 0;
-                }
-            }
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                currentCube -= 1;
-                if (currentCube < 0)
-                {
-                    currentCube = Cubes.Length - 1;
-                }
-            }
+        //print(atLeastOneCubeInClearPosition);
+           bool clear = false;
+           if (!atLeastOneCubeInClearPosition && !clear)
+           {
+            print(atLeastOneCubeInClearPosition);
+            StartCoroutine(clearPlay());
+   clear = true;
+           }
 
-        }
-        Cube = Cubes[currentCube];
-        Cube.GetComponent<Outline>().enabled = true;
-        GameObject ChildGameObject = Cube.transform.GetChild(0).gameObject;
+        /*  Cube = Cubes[currentCube];
+          Cube.GetComponent<Outline>().enabled = true;
+          GameObject ChildGameObject = Cube.transform.GetChild(0).gameObject;
 
-        foreach (GameObject Cube in Cubes)
-        {
-            if (Cube != Cubes[currentCube])
-                Cube.GetComponent<Outline>().enabled = false;
-        }
-        if (selecting == true && (Input.GetKeyDown(KeyCode.Space)))
-        {
-            ChildGameObject.SetActive(true);
-            selecting = false;
+          foreach (GameObject Cube in Cubes)
+          {
+              if (Cube != Cubes[currentCube])
+                  Cube.GetComponent<Outline>().enabled = false;
+          }
 
-        }
-        else if (selecting == false && (Input.GetKeyDown(KeyCode.Space)))
-        {
-
-            ChildGameObject.SetActive(false);
-            selecting = true;
-
-        }
-
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            print("undo");
-            int v = undo.UndoCommand();
-        }
+          if (Input.GetKeyDown(KeyCode.Z))
+          {
+              print("undo");
+              int v = undo.UndoCommand();
+          }*/
     }
-
+    IEnumerator clearPlay()
+    {
+        clearSFX.SetActive(true);
+       yield return new WaitForSeconds(2.5f);
+        clearSFX.SetActive(false);
+    }
 
     private void AddCommand(Command command)
     {

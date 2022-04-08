@@ -20,23 +20,28 @@ public class TutorialPrompts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (firstUp && (Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.DownArrow)))
+        if (firstUp && (Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.DownArrow) | Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.RightArrow)))
         {
-            upArrow.SetActive(false);
-            downArrow.SetActive(false);
-            spaceBar.SetActive(true);
+            StartCoroutine(arrowsFalse());
             firstUp = false;
         }
-        if (firstSpace && Input.GetKeyDown(KeyCode.Space))
+        else if (!firstUp && (Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.DownArrow) | Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.RightArrow)))
         {
-            spaceBar.SetActive(false);
-            upArrow.SetActive(true);
-            downArrow.SetActive(true);
-            leftArrow.SetActive(true);
-            rightArrow.SetActive(true);
-            firstSpace = false; StartCoroutine(promptUp());
-
+            StartCoroutine(arrowsFalse());
         }
+            if (firstSpace && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(spaceFalse());
+            firstSpace = false; 
+        }
+            else if (!firstSpace && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(enterTrue());
+        }
+            if(!firstSpace && Input.GetKeyDown(KeyCode.Return))
+        {
+            StartCoroutine(enterFalse())
+;        }
         /*        if (!firstUp && (Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.DownArrow) | Input.GetKeyDown(KeyCode.RightArrow) | Input.GetKeyDown(KeyCode.LeftArrow)))
                 {
                     upArrow.SetActive(false);
@@ -48,21 +53,34 @@ public class TutorialPrompts : MonoBehaviour
                 }*/
 
     }
-
-    IEnumerator promptUp()
+    IEnumerator arrowsFalse()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(1f);
         upArrow.SetActive(false);
-        leftArrow.SetActive(false);
-        downArrow.SetActive(false);
         rightArrow.SetActive(false);
-        yield return new WaitForSeconds(1.5f);
+        downArrow.SetActive(false);
+        leftArrow.SetActive(false);
         spaceBar.SetActive(true);
-        yield return new WaitForSeconds(3f);
+    }
+    IEnumerator spaceFalse()
+    {
+        yield return new WaitForSeconds(1f);
         spaceBar.SetActive(false);
-        yield return new WaitForSeconds(2f);
+        upArrow.SetActive(true);
+        rightArrow.SetActive(true);
+        downArrow.SetActive(true);
+        leftArrow.SetActive(true);
+    }
+    IEnumerator enterTrue()
+    {    
+        yield return new WaitForSeconds(1f);
+        spaceBar.SetActive(false);
         enterKey.SetActive(true);
-        yield return new WaitForSeconds(4f);
+       
+    }
+    IEnumerator enterFalse()
+    {
+        yield return new WaitForSeconds(1f);
         enterKey.SetActive(false);
     }
 }

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 public class ButtonScripts : MonoBehaviour
 {
     public Camera maincamera;
@@ -46,5 +46,10 @@ public class ButtonScripts : MonoBehaviour
     public void loadLevel()
     {
         print("L1");
+    }
+    public void reloadScene()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
     }
 }
