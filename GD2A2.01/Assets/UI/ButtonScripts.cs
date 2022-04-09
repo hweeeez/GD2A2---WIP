@@ -21,6 +21,7 @@ public class ButtonScripts : MonoBehaviour
     void Update()
     {
         buttonSelect = EventSystem.current.currentSelectedGameObject.name;
+        print(buttonSelect);
     }
     IEnumerator MoveTo(Camera maincam, Vector3 destination, float speed)
     {
@@ -47,7 +48,7 @@ public class ButtonScripts : MonoBehaviour
     }
     public void loadLevel()
     {
-        SceneManager.LoadScene("buttonSelect");
+        SceneManager.LoadScene(buttonSelect);
     }
     public void reloadScene()
     {

@@ -9,7 +9,7 @@ public class SelectCube : MonoBehaviour
     private GameObject closestLeft;
     private GameObject closestUp;
     private GameObject closestDown;
-
+    public LayerMask playerCube;
     private Undo undo;
     bool canLeft;
     bool canRight;
@@ -82,10 +82,7 @@ public class SelectCube : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        canLeft = true;
-        canRight = true;
-        canUp = true;
-        canDown = true;
+  
 
         cubecell = tilemap.WorldToCell(transform.position);
         Vector3 cellCenterPos = tilemap.GetCellCenterWorld(cubecell);
@@ -103,11 +100,39 @@ public class SelectCube : MonoBehaviour
             if (Vector3.Distance(barrierPos[i], moveRight) < 0.0001) { canRight = false; }
             if (Vector3.Distance(barrierPos[i], moveLeft) < 0.0001) { canLeft = false; }
         }
-        Vector3 upDir = this.transform.position - new Vector3(0, 0, 10f);
+        RaycastHit hit;
+        if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, playerCube)){
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
+            Debug.Log(hit.collider.gameObject.name);
+            closestDown = hit.collider.gameObject;
+            if (closestDown == null) { canDown = false; } else { canDown = true; }
+        }
+        if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, playerCube))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.back) * hit.distance, Color.green);
+            Debug.Log(hit.collider.gameObject.name);
+            closestUp = hit.collider.gameObject;
+            if (closestUp == null) { canUp = false; } else { canUp = true; }
+        }
+        if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.left), out hit, Mathf.Infinity, playerCube))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.left) * hit.distance, Color.yellow);
+            Debug.Log(hit.collider.gameObject.name);
+            closestRight = hit.collider.gameObject;
+            if (closestRight == null) { canRight = false; } else { canRight = true; }
+        }
+        if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity, playerCube))
+        {
+            Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.right) * hit.distance, Color.blue);
+            Debug.Log(hit.collider.gameObject.name);
+            closestLeft = hit.collider.gameObject;
+            if (closestLeft == null) { canLeft = false; } else { canLeft = true; }
+        }
+      /*  Vector3 upDir = this.transform.position - new Vector3(0, 0, 10f);
         Vector3 downDir = this.transform.position + new Vector3(0, 0, 10f);
         Vector3 leftDir = this.transform.position + new Vector3(10f, 0, 0);
         Vector3 rightDir = this.transform.position - new Vector3(10f, 0, 0);
-        float closestDist = Mathf.Infinity;
+        float closestDist = Mathf.Infinity;*/
         /*        foreach (GameObject cube in cubes)
                 {
                     GameObject closestCube = null;
@@ -120,11 +145,11 @@ public class SelectCube : MonoBehaviour
                         print(closestCube.name);
                     }
                 }*/
-        for (int i = 0; i < cubes.Count; i++)
+       /* for (int i = 0; i < cubes.Count; i++)
         {
             FindNearestPointOnLine(this.transform.position, upDir, cubes[i].transform.position);
             Debug.Log(FindNearestPointOnLine(this.transform.position, upDir, cubes[i].transform.position));
-
+*/
             /*            if (!closestUp | !closestDown | !closestLeft | !closestRight)
                         {
                             closestUp = cubes[i];
@@ -149,7 +174,7 @@ public class SelectCube : MonoBehaviour
                         {
                             closestRight = cubes[i];
                         }*/
-        }
+      //  }
         if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
         {
             this.transform.position = closestLeft.transform.position;
@@ -168,7 +193,10 @@ public class SelectCube : MonoBehaviour
             this.transform.position = closestUp.transform.position;
             //whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, -1);
         }
-
+        print("right" + closestRight);
+        print("left" + closestLeft);
+        print("up" + closestUp);
+        print("down" + closestDown);
         if (firstSpace == true && (Input.GetKeyDown(KeyCode.Space)))
         {
             canRight = false;

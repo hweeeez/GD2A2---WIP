@@ -64,6 +64,7 @@ GameObject:
   - component: {fileID: 4034280335773290148}
   - component: {fileID: 4034280335773290170}
   - component: {fileID: 3946311282661323743}
+  - component: {fileID: 5280879028391284866}
   m_Layer: 0
   m_Name: RedCube
   m_TagString: Red
@@ -175,3 +176,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: 1
   eraseRenderer: 0
+--- !u!114 &5280879028391284866
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4034280335773290171}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d512ac0030bda2a409f5900a2f2ac314, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tags:
+  - Cube
+  - Red
+  - MoveCube

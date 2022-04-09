@@ -11,13 +11,13 @@ GameObject:
   - component: {fileID: 381843156203086436}
   - component: {fileID: 381843156203086438}
   - component: {fileID: 381843156203086437}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: moveScript
-  m_TagString: Untagged
+  m_TagString: Purple
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &381843156203086436
 Transform:
   m_ObjectHideFlags: 0
@@ -59,8 +59,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 1, z: 1.1947756}
+  m_Center: {x: 0, y: 0, z: 0.09738779}
 --- !u!1 &2264191079509421398
 GameObject:
   m_ObjectHideFlags: 0
@@ -76,9 +76,9 @@ GameObject:
   - component: {fileID: 6732222301723686169}
   - component: {fileID: 2264191079509421480}
   - component: {fileID: 6481887627244676378}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PurpleCube
-  m_TagString: Purple
+  m_TagString: Cube
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -174,6 +174,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tags:
   - Purple
+  - MoveCube
 --- !u!114 &2264191079509421480
 MonoBehaviour:
   m_ObjectHideFlags: 0

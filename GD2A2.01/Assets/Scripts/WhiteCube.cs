@@ -37,7 +37,6 @@ public class WhiteCube : MonoBehaviour
     }
     public void Update()
     {
-        print(cubes.Length);
         cubecell = tilemap.WorldToCell(transform.position);
         Vector3 cellCenterPos = tilemap.GetCellCenterWorld(cubecell);
         Vector3 thispos = this.transform.position;

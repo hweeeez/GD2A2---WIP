@@ -11,7 +11,10 @@ public class TutorialPrompts : MonoBehaviour
     public GameObject spaceBar;
     public GameObject enterKey;
     bool firstSpace = true;
+    bool secondSpace = true;
     bool firstUp = true;
+    bool secondUp = true;
+    bool firstEnter = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,22 +27,26 @@ public class TutorialPrompts : MonoBehaviour
         {
             StartCoroutine(arrowsFalse());
             firstUp = false;
+            secondUp = true;
         }
-        else if (!firstUp && (Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.DownArrow) | Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.RightArrow)))
+        else if (secondUp && (Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.DownArrow) | Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.RightArrow)))
         {
             StartCoroutine(arrowsFalse());
+            secondUp = false;
         }
             if (firstSpace && Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(spaceFalse());
-            firstSpace = false; 
+            firstSpace = false;
+            secondSpace = true;
         }
-            else if (!firstSpace && Input.GetKeyDown(KeyCode.Space))
+            else if (secondSpace && Input.GetKeyDown(KeyCode.Space))
         {
             StartCoroutine(enterTrue());
+            secondSpace = false;
         }
-            if(!firstSpace && Input.GetKeyDown(KeyCode.Return))
-        {
+            if(firstEnter && Input.GetKeyDown(KeyCode.Return))
+        {firstEnter = false;
             StartCoroutine(enterFalse())
 ;        }
         /*        if (!firstUp && (Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.DownArrow) | Input.GetKeyDown(KeyCode.RightArrow) | Input.GetKeyDown(KeyCode.LeftArrow)))

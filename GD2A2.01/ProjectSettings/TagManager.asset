@@ -22,8 +22,8 @@ TagManager:
   - HorizontalWalls
   - Clear
   - Select
-  - 
-  - 
+  - PlayerCube
+  - Ignore
   - 
   - 
   - 

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4765079584162810199}
   - component: {fileID: 4765079584162811563}
   - component: {fileID: 4765079584162811562}
+  - component: {fileID: 8162483738910323552}
   m_Layer: 9
   m_Name: SelectCube
   m_TagString: Untagged
@@ -30,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 4765079584162810196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.74, y: 1.02, z: 5.62}
-  m_LocalScale: {x: 0.75172, y: 0.75172, z: 0.75172}
+  m_LocalScale: {x: 0.94, y: 0.94, z: 0.94}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -109,7 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cb7a8e8e22e10342845e8169f8fbada, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameman: {fileID: 0}
+  playerCube:
+    serializedVersion: 2
+    m_Bits: 1024
   whiteCube: {fileID: 4765079584162810196}
   tilemap: {fileID: 0}
   currentCube: {fileID: 0}
@@ -129,3 +132,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &8162483738910323552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4765079584162810196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31c60a2befc0c10449d8eda08df768d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tilemap: {fileID: 0}

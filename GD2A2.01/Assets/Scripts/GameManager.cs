@@ -68,7 +68,7 @@ public class GameManager : MonoBehaviour
            bool clear = false;
            if (!atLeastOneCubeInClearPosition && !clear)
            {
-            print(atLeastOneCubeInClearPosition);
+            //print(atLeastOneCubeInClearPosition);
             StartCoroutine(clearPlay());
    clear = true;
            }

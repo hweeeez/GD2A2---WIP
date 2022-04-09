@@ -6,7 +6,10 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     public GameObject winSFX;
-
+    [SerializeField]
+    Transform[] waypoints;
+    int waypointIndex = 0;
+    
     private GameObject otherPurpleCube;
     List<GameObject> purpleCubes;
     private bool movePlayer = false;
@@ -16,7 +19,10 @@ public class Player : MonoBehaviour
     MultiTag[] multiTag;
     // Start is called before the first frame update
     void Start()
-    { purpleCubes = new List<GameObject>();
+    {
+        transform.position = waypoints[waypointIndex].transform.position;
+
+        purpleCubes = new List<GameObject>();
         multiTag = GameObject.FindObjectsOfType<MultiTag>();
         for (int i=0; i<multiTag.Length; i++)
         {
@@ -29,7 +35,20 @@ public class Player : MonoBehaviour
         animator = gameObject.GetComponent<Animator>();
         otherPurpleCube = GameObject.FindGameObjectWithTag("Purple");
     }
+    void Move()
+    {
+        this.transform.position = Vector3.MoveTowards(this.transform.position,
+                                       waypoints[waypointIndex].transform.position,
+                                       speed * Time.deltaTime);
+        if (this.transform.position == waypoints[waypointIndex].transform.position)
+        {
+            waypointIndex += 1;
+        }
 
+            if (waypointIndex == waypoints.Length) { 
+                movePlayer = false;
+        }
+    }
     // Update is called once per frame
     void Update()
     {
@@ -42,9 +61,9 @@ public class Player : MonoBehaviour
         }
         if (movePlayer)
         {
-
-            float step = speed * Time.deltaTime;
-            transform.position = Vector3.MoveTowards(transform.position, endPos, step);
+            Move();
+           // float step = speed * Time.deltaTime;
+           // transform.position = Vector3.MoveTowards(transform.position, endPos, step);
         }
         else { animator.SetBool("Walking", false); }
     }
