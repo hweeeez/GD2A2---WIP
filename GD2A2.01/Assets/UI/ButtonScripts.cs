@@ -2,23 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.EventSystems;
 public class ButtonScripts : MonoBehaviour
 {
+    string buttonSelect;
     public Camera maincamera;
     Vector3 homePos;
     Vector3 menuPos;
     // Start is called before the first frame update
     void Start()
     {
-        homePos = new Vector3(-0.23f, 1f ,-10f);
-        menuPos = new Vector3(20.6f , 1f, -10f);
+        homePos = new Vector3(-0.23f, 1f, -10f);
+        menuPos = new Vector3(20.6f, 1f, -10f);
         maincamera.transform.position = homePos;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        buttonSelect = EventSystem.current.currentSelectedGameObject.name;
     }
     IEnumerator MoveTo(Camera maincam, Vector3 destination, float speed)
     {
@@ -45,7 +47,7 @@ public class ButtonScripts : MonoBehaviour
     }
     public void loadLevel()
     {
-        print("L1");
+        SceneManager.LoadScene("buttonSelect");
     }
     public void reloadScene()
     {

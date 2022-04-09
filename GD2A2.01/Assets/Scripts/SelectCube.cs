@@ -9,7 +9,7 @@ public class SelectCube : MonoBehaviour
     private GameObject closestLeft;
     private GameObject closestUp;
     private GameObject closestDown;
-    
+
     private Undo undo;
     bool canLeft;
     bool canRight;
@@ -66,7 +66,19 @@ public class SelectCube : MonoBehaviour
          }
  */
     }
+    public Vector3 FindNearestPointOnLine(Vector3 origin, Vector3 end, Vector3 point)
+    {
+        //Get heading
+        Vector3 heading = (end - origin);
+        float magnitudeMax = heading.magnitude;
+        heading.Normalize();
 
+        //Do projection from the point but clamp it
+        Vector3 lhs = point - origin;
+        float dotP = Vector2.Dot(lhs, heading);
+        dotP = Mathf.Clamp(dotP, 0f, magnitudeMax);
+        return origin + heading * dotP;
+    }
     // Update is called once per frame
     void Update()
     {
@@ -95,32 +107,48 @@ public class SelectCube : MonoBehaviour
         Vector3 downDir = this.transform.position + new Vector3(0, 0, 10f);
         Vector3 leftDir = this.transform.position + new Vector3(10f, 0, 0);
         Vector3 rightDir = this.transform.position - new Vector3(10f, 0, 0);
-
+        float closestDist = Mathf.Infinity;
+        /*        foreach (GameObject cube in cubes)
+                {
+                    GameObject closestCube = null;
+                    Vector3 dirtoCube = cube.transform.position - this.transform.position;
+                    float dSqr = dirtoCube.sqrMagnitude;
+                    if (dSqr < closestDist)
+                    {
+                        closestDist = dSqr;
+                        closestCube = cube;
+                        print(closestCube.name);
+                    }
+                }*/
         for (int i = 0; i < cubes.Count; i++)
         {
-            if (!closestUp | !closestDown | !closestLeft | !closestRight)
-            {
-                closestUp = cubes[i];
-                closestDown = cubes[i];
-                closestLeft = cubes[i];
-                closestRight = cubes[i];
-            }
-            if ((Vector3.Distance(upDir, cubes[i].transform.position) <= Vector3.Distance(upDir, closestUp.transform.position)))
-            {
-                closestUp = cubes[i];
-            }
-            if ((Vector3.Distance(downDir, cubes[i].transform.position) <= Vector3.Distance(downDir, closestDown.transform.position)))
-            {
-                closestDown = cubes[i];
-            }
-            if ((Vector3.Distance(leftDir, cubes[i].transform.position) <= Vector3.Distance(leftDir, closestLeft.transform.position)))
-            {
-                closestLeft = cubes[i];
-            }
-            if ((Vector3.Distance(rightDir, cubes[i].transform.position) <= Vector3.Distance(rightDir, closestRight.transform.position)))
-            {
-                closestRight = cubes[i];
-            }
+            FindNearestPointOnLine(this.transform.position, upDir, cubes[i].transform.position);
+            Debug.Log(FindNearestPointOnLine(this.transform.position, upDir, cubes[i].transform.position));
+
+            /*            if (!closestUp | !closestDown | !closestLeft | !closestRight)
+                        {
+                            closestUp = cubes[i];
+                            closestDown = cubes[i];
+                            closestLeft = cubes[i];
+                            closestRight = cubes[i];
+                        }
+
+                        if ((Vector3.Distance(upDir, cubes[i].transform.position) <= Vector3.Distance(upDir, closestUp.transform.position)))
+                        {
+                            closestUp = cubes[i];
+                        }
+                        if ((Vector3.Distance(downDir, cubes[i].transform.position) <= Vector3.Distance(downDir, closestDown.transform.position)))
+                        {
+                            closestDown = cubes[i];
+                        }
+                        if ((Vector3.Distance(leftDir, cubes[i].transform.position) <= Vector3.Distance(leftDir, closestLeft.transform.position)))
+                        {
+                            closestLeft = cubes[i];
+                        }
+                        if ((Vector3.Distance(rightDir, cubes[i].transform.position) <= Vector3.Distance(rightDir, closestRight.transform.position)))
+                        {
+                            closestRight = cubes[i];
+                        }*/
         }
         if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
         {
@@ -160,8 +188,8 @@ public class SelectCube : MonoBehaviour
             firstSpace = true;
         }
         if (!selecting) { this.transform.position = currentCube.transform.position; }
- 
     }
+
     private void OnTriggerStay(Collider collision)
     {
         //print(collision.name);
@@ -185,83 +213,84 @@ public class SelectCube : MonoBehaviour
         { other.GetComponent<Outline>().enabled = false; }
 
     }
-   // GameObject GetClosestObject()
+    // GameObject GetClosestObject()
     //{
-/*        GameObject closest = null;
-        for (int i = 0; i < cubes.Count; i++)
-        {
-            GameObject obj = cubes[i];
-            Vector3 dir = obj.transform.position - this.transform.forward;
-            //Vector3 dir1 = closest.transform.position - this.transform.position;
-            if (!closest)
+    /*        GameObject closest = null;
+            for (int i = 0; i < cubes.Count; i++)
             {
-                closest = obj;
-                dir1 = closest.transform.position - this.transform.position;
-            } 
-            else
-            {
-                if (dir1.sqrMagnitude > dir.sqrMagnitude)
+                GameObject obj = cubes[i];
+                Vector3 dir = obj.transform.position - this.transform.forward;
+                //Vector3 dir1 = closest.transform.position - this.transform.position;
+                if (!closest)
                 {
                     closest = obj;
+                    dir1 = closest.transform.position - this.transform.position;
+                } 
+                else
+                {
+                    if (dir1.sqrMagnitude > dir.sqrMagnitude)
+                    {
+                        closest = obj;
+                    }
                 }
             }
-        }
-        print("Var "+closest.name);
+            print("Var "+closest.name);
 
-        return closest;*/
-        /* for (int i = 0; i < cubes.Count; i++)
+            return closest;*/
+    /* for (int i = 0; i < cubes.Count; i++)
+     {
+         if (!closestObject)
          {
-             if (!closestObject)
-             {
-                 closestObject = cubes[i];
-             }
-             if ((Vector3.Distance(this.transform.position, cubes[i].transform.forward) <= Vector3.Distance(this.transform.position, closestObject.transform.position)))
-             {
-                 closestObject = cubes[i];
-             }
-
+             closestObject = cubes[i];
          }
-         return closestObject;
+         if ((Vector3.Distance(this.transform.position, cubes[i].transform.forward) <= Vector3.Distance(this.transform.position, closestObject.transform.position)))
+         {
+             closestObject = cubes[i];
+         }
+
      }
-    GameObject CheckObjects()
+     return closestObject;
+ }
+GameObject CheckObjects()
+{
+    List<GameObject> InAngle = new List<GameObject>();
+
+    for (int i = 0; i < cubes.Count; i++)
     {
-        List<GameObject> InAngle = new List<GameObject>();
+        GameObject tested = cubes[i];
 
-        for (int i = 0; i < cubes.Count; i++)
+        Vector3 dir = tested.transform.position - this.transform.forward;
+
+
+
+            InAngle.Add(tested);
+
+    }
+
+    GameObject closest = null;
+
+    for (int j = 0; j < InAngle.Count; j++)
+    {
+        GameObject tested = InAngle[j];
+
+        Vector3 dir1 = tested.transform.position - this.transform.position;
+        Vector3 dir2 = closest.transform.position - this.transform.position;
+
+        if (!closest)
         {
-            GameObject tested = cubes[i];
-
-            Vector3 dir = tested.transform.position - this.transform.forward;
-
-          
-    
-                InAngle.Add(tested);
-            
+            closest = tested;
         }
-
-        GameObject closest = null;
-
-        for (int j = 0; j < InAngle.Count; j++)
+        else
         {
-            GameObject tested = InAngle[j];
-
-            Vector3 dir1 = tested.transform.position - this.transform.position;
-            Vector3 dir2 = closest.transform.position - this.transform.position;
-
-            if (!closest)
+            if (dir2.sqrMagnitude > dir1.sqrMagnitude)
             {
                 closest = tested;
             }
-            else
-            {
-                if (dir2.sqrMagnitude > dir1.sqrMagnitude)
-                {
-                    closest = tested;
-                }
-            }
         }
-
-        return closest;
     }
-*/}
+
+    return closest;
+}
+*/
+}
 
