@@ -4839,7 +4839,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6072d3c01404f14d8a3e2442a218238, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  purpleTele: {x: 0, y: 0, z: 0}
   winSFX: {fileID: 1169319726}
+  waypoints: []
   target: {fileID: 1907835684}
 --- !u!1001 &1900578501
 PrefabInstance:
@@ -5702,6 +5704,22 @@ PrefabInstance:
     - target: {fileID: 2565366520036167013, guid: cbbde82bbdb98574fb9104596fefa688, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3217350675399566504, guid: cbbde82bbdb98574fb9104596fefa688, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: loadHome
+      objectReference: {fileID: 0}
+    - target: {fileID: 3804441724128435179, guid: cbbde82bbdb98574fb9104596fefa688, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3a595fa224b1871458d468e8334cb096, type: 3}
+    - target: {fileID: 7085782437587516561, guid: cbbde82bbdb98574fb9104596fefa688, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.64
+      objectReference: {fileID: 0}
+    - target: {fileID: 7085782437587516561, guid: cbbde82bbdb98574fb9104596fefa688, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 7575184062969895854, guid: cbbde82bbdb98574fb9104596fefa688, type: 3}
       propertyPath: m_RootOrder

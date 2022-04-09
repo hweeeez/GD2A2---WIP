@@ -49,10 +49,22 @@ public class ButtonScripts : MonoBehaviour
     public void loadLevel()
     {
         SceneManager.LoadScene(buttonSelect);
+        int buttonIndex = SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/" + buttonSelect + ".unity");
+
+        PlayerPrefs.SetInt("lastscene", buttonIndex);
     }
     public void reloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
+    }
+    public void loadLastcene()
+    {
+        SceneManager.LoadScene(PlayerPrefs.GetString("lastscene"));
+        SceneManager.LoadScene(PlayerPrefs.GetInt("lastscene"));
+    }
+    public void loadHome()
+    {
+        SceneManager.LoadScene("Home");
     }
 }

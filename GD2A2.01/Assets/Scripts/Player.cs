@@ -5,11 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
+    public Vector3 purpleTele;
     public GameObject winSFX;
     [SerializeField]
     Transform[] waypoints;
     int waypointIndex = 0;
-    
+
     private GameObject otherPurpleCube;
     List<GameObject> purpleCubes;
     private bool movePlayer = false;
@@ -24,19 +25,22 @@ public class Player : MonoBehaviour
 
         purpleCubes = new List<GameObject>();
         multiTag = GameObject.FindObjectsOfType<MultiTag>();
-        for (int i=0; i<multiTag.Length; i++)
+        for (int i = 0; i < multiTag.Length; i++)
         {
             if (multiTag[i].HasTag("Purple"))
             {
                 purpleCubes.Add(multiTag[i].gameObject);
             }
         }
-        
+
         animator = gameObject.GetComponent<Animator>();
         otherPurpleCube = GameObject.FindGameObjectWithTag("Purple");
     }
     void Move()
     {
+        Vector3 targetDir = waypoints[waypointIndex].position - transform.position;
+        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, 5f * Time.deltaTime, 0.0f);
+        transform.rotation = Quaternion.LookRotation(newDir);
         this.transform.position = Vector3.MoveTowards(this.transform.position,
                                        waypoints[waypointIndex].transform.position,
                                        speed * Time.deltaTime);
@@ -45,13 +49,16 @@ public class Player : MonoBehaviour
             waypointIndex += 1;
         }
 
-            if (waypointIndex == waypoints.Length) { 
-                movePlayer = false;
+        if (waypointIndex == 1)//waypoints.Length)
+        {
+            this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            movePlayer = false;
         }
     }
     // Update is called once per frame
     void Update()
     {
+        print(waypointIndex);
         Vector3 endPos = target.position + new Vector3(0, -0.5f, 1);
         if (Input.GetKeyDown(KeyCode.Return))
         {
@@ -62,8 +69,8 @@ public class Player : MonoBehaviour
         if (movePlayer)
         {
             Move();
-           // float step = speed * Time.deltaTime;
-           // transform.position = Vector3.MoveTowards(transform.position, endPos, step);
+            // float step = speed * Time.deltaTime;
+            // transform.position = Vector3.MoveTowards(transform.position, endPos, step);
         }
         else { animator.SetBool("Walking", false); }
     }
@@ -74,14 +81,13 @@ public class Player : MonoBehaviour
 
         if (multiTag != null && multiTag.HasTag("Purple"))
         {
-            foreach(GameObject go in purpleCubes)
+            foreach (GameObject go in purpleCubes)
             {
-                if(go != collision.gameObject)
+                if (go != collision.gameObject)
                 {
                     otherPurpleCube = go;
                 }
             }
-            Debug.Log("COLLIDED");
             StartCoroutine(teleport());
         }
         if (collision.gameObject.tag == "Green")
@@ -111,7 +117,7 @@ public class Player : MonoBehaviour
         movePlayer = false;
         animator.SetTrigger("Jump");
         yield return new WaitForSeconds(0.5f);
-        this.transform.position = otherPurpleCube.transform.position + new Vector3(0, -0.5f, -1f);
+        this.transform.position = otherPurpleCube.transform.position + purpleTele;
         yield return new WaitForSeconds(0.2f);
         animator.GetComponent<Animator>().ResetTrigger("Jump");
         movePlayer = true;
@@ -123,5 +129,6 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(1f);
         //This will load the next scene in the buildIndex, e.g if in scene 3, go to scene 4
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        PlayerPrefs.SetInt("lastscene", SceneManager.GetActiveScene().buildIndex + 1);
     }
 }
