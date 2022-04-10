@@ -48,7 +48,7 @@ MonoBehaviour:
   upWall: {fileID: 0}
   downWall: {fileID: 0}
   gameman: {fileID: 0}
-  whiteCube: {fileID: 0}
+  whiteCube: {fileID: 4034280335773290171}
   tilemap: {fileID: 0}
 --- !u!1 &4034280335773290171
 GameObject:

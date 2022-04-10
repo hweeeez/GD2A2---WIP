@@ -5,13 +5,17 @@ using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 public class ButtonScripts : MonoBehaviour
 {
+    public AudioSource dLow;
     string buttonSelect;
     public Camera maincamera;
     Vector3 homePos;
     Vector3 menuPos;
+    int firstTime = 0;
     // Start is called before the first frame update
     void Start()
     {
+        //PlayerPrefs.SetInt("firsttime", 1);
+        dLow = GetComponent<AudioSource>();
         homePos = new Vector3(-0.23f, 1f, -10f);
         menuPos = new Vector3(20.6f, 1f, -10f);
         maincamera.transform.position = homePos;
@@ -19,9 +23,11 @@ public class ButtonScripts : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
+    { print(PlayerPrefs.GetInt("firsttime"));
         buttonSelect = EventSystem.current.currentSelectedGameObject.name;
         print(buttonSelect);
+   
+
     }
     IEnumerator MoveTo(Camera maincam, Vector3 destination, float speed)
     {
@@ -48,20 +54,48 @@ public class ButtonScripts : MonoBehaviour
     }
     public void loadLevel()
     {
-        SceneManager.LoadScene(buttonSelect);
-        int buttonIndex = SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/" + buttonSelect + ".unity");
+        DontDestroyOnLoad(this);
 
+        dLow.Play();
+        StartCoroutine(loading());
+     
+        int buttonIndex = SceneUtility.GetBuildIndexByScenePath("Assets/Scenes/" + buttonSelect + ".unity");
         PlayerPrefs.SetInt("lastscene", buttonIndex);
+        PlayerPrefs.SetInt("firsttime", 1);
+    }
+    IEnumerator loading()
+    {
+        yield return new WaitForSeconds(1.7f);
+        SceneManager.LoadScene(buttonSelect);
     }
     public void reloadScene()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
+    IEnumerator pp()
+    {
+        yield return new WaitForSeconds(0.1f);
+        PlayerPrefs.SetInt("firsttime", 1);
+    }
     public void loadLastcene()
     {
-        SceneManager.LoadScene(PlayerPrefs.GetString("lastscene"));
+        DontDestroyOnLoad(this);
+
+        int first = PlayerPrefs.GetInt("firsttime");
+        //SceneManager.LoadScene(PlayerPrefs.GetString("lastscene"));
         SceneManager.LoadScene(PlayerPrefs.GetInt("lastscene"));
+        if (PlayerPrefs.GetInt("firsttime") == 0)
+        {
+            StartCoroutine(pp());
+            SceneManager.LoadScene("L1");
+            //PlayerPrefs.SetInt("firsttime", 1);
+        }
+        if (PlayerPrefs.GetInt("firsttime") == 1)
+        {
+            SceneManager.LoadScene(PlayerPrefs.GetInt("lastscene"));
+        }
+        
     }
     public void loadHome()
     {

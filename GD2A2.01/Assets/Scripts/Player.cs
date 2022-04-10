@@ -5,8 +5,8 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    public Vector3 purpleTele;
     public GameObject winSFX;
+
     [SerializeField]
     Transform[] waypoints;
     int waypointIndex = 0;
@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     private GameObject otherPurpleCube;
     List<GameObject> purpleCubes;
     private bool movePlayer = false;
+
     private float speed = 2f;
     Animator animator;
     public Transform target;
@@ -21,8 +22,11 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = waypoints[waypointIndex].transform.position;
+        //PlayerPrefs.SetInt("firsttime", 1);
 
+
+        //transform.position = waypoints[waypointIndex].transform.position;
+        animator = gameObject.GetComponent<Animator>();
         purpleCubes = new List<GameObject>();
         multiTag = GameObject.FindObjectsOfType<MultiTag>();
         for (int i = 0; i < multiTag.Length; i++)
@@ -32,47 +36,31 @@ public class Player : MonoBehaviour
                 purpleCubes.Add(multiTag[i].gameObject);
             }
         }
-
-        animator = gameObject.GetComponent<Animator>();
         otherPurpleCube = GameObject.FindGameObjectWithTag("Purple");
-    }
-    void Move()
-    {
-        Vector3 targetDir = waypoints[waypointIndex].position - transform.position;
-        Vector3 newDir = Vector3.RotateTowards(transform.forward, targetDir, 5f * Time.deltaTime, 0.0f);
-        transform.rotation = Quaternion.LookRotation(newDir);
-        this.transform.position = Vector3.MoveTowards(this.transform.position,
-                                       waypoints[waypointIndex].transform.position,
-                                       speed * Time.deltaTime);
-        if (this.transform.position == waypoints[waypointIndex].transform.position)
-        {
-            waypointIndex += 1;
-        }
 
-        if (waypointIndex == 1)//waypoints.Length)
-        {
-            this.GetComponent<Rigidbody>().velocity = Vector3.zero;
-            movePlayer = false;
-        }
     }
     // Update is called once per frame
     void Update()
     {
-        print(waypointIndex);
         Vector3 endPos = target.position + new Vector3(0, -0.5f, 1);
         if (Input.GetKeyDown(KeyCode.Return))
         {
-            animator.SetBool("Walking", true);
+            print("walk");
+
             movePlayer = true;
 
         }
         if (movePlayer)
         {
-            Move();
+            animator.SetBool("Walking", true);
+            float step = speed * Time.deltaTime;
+            transform.position = Vector3.MoveTowards(transform.position, endPos, step);
+
             // float step = speed * Time.deltaTime;
             // transform.position = Vector3.MoveTowards(transform.position, endPos, step);
         }
         else { animator.SetBool("Walking", false); }
+
     }
 
     void OnCollisionEnter(Collision collision)
@@ -86,12 +74,25 @@ public class Player : MonoBehaviour
                 if (go != collision.gameObject)
                 {
                     otherPurpleCube = go;
+                    if (otherPurpleCube.transform.GetChild(0).gameObject.GetComponent<WhiteCube>().occupied == true)
+                    {
+                        StartCoroutine(reloadscene());
+                        movePlayer = false;
+                        print("cannotmove");
+                        this.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                    }
+                    else { StartCoroutine(teleport()); }
                 }
+
             }
-            StartCoroutine(teleport());
         }
+
         if (collision.gameObject.tag == "Green")
         {
+            if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("L10"))
+            {
+                StartCoroutine(loadHome());
+            }
             animator.SetTrigger("Win");
             movePlayer = false;
             StartCoroutine(LoadNextLevel());
@@ -104,11 +105,16 @@ public class Player : MonoBehaviour
             StartCoroutine(DeathAnim());
         }
     }
+    IEnumerator reloadscene()
+    {
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
     IEnumerator DeathAnim()
     {
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(3.5f);
         this.transform.localScale = new Vector3(0f, 0f, 0f);
-        yield return new WaitForSeconds(4f);
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
     }
@@ -117,7 +123,7 @@ public class Player : MonoBehaviour
         movePlayer = false;
         animator.SetTrigger("Jump");
         yield return new WaitForSeconds(0.5f);
-        this.transform.position = otherPurpleCube.transform.position + purpleTele;
+        this.transform.position = otherPurpleCube.transform.position + new Vector3(0, -0.5f, -1f);
         yield return new WaitForSeconds(0.2f);
         animator.GetComponent<Animator>().ResetTrigger("Jump");
         movePlayer = true;
@@ -126,9 +132,22 @@ public class Player : MonoBehaviour
     IEnumerator LoadNextLevel()
     {
         winSFX.SetActive(true);
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2.5f);
         //This will load the next scene in the buildIndex, e.g if in scene 3, go to scene 4
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        //( if (SceneManager.GetActiveScene() == SceneManager.GetSceneByName("scene1"))  
         PlayerPrefs.SetInt("lastscene", SceneManager.GetActiveScene().buildIndex + 1);
+
     }
+    IEnumerator loadHome()
+    {
+        winSFX.SetActive(true);
+        yield return new WaitForSeconds(1.5f);
+        SceneManager.LoadScene("Home");
+    }
+
+
+
+
 }
+

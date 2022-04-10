@@ -12,32 +12,35 @@ public class GameManager : MonoBehaviour
     private GameObject[] clearCubes;
     private Undo undo;
     private bool selecting = true;
-    public GameObject[] Cubes;
+   public GameObject[] Cubes;
     public bool isSelected;
     private GameObject Cube;
     public int currentCube;
-
+    
+    
     public GameObject clearSFX;
     // Start is called before the first frame update
     void Start()
     {
-        clearCubes = GameObject.FindGameObjectsWithTag("Clear");
+        
+           clearCubes = GameObject.FindGameObjectsWithTag("Clear");
         cubes = GameObject.FindGameObjectsWithTag("Cube");
         clearPositions = new Vector3[clearCubes.Length];
-        cubePositions = new Vector3[Cubes.Length];
+        cubePositions = new Vector3[cubes.Length];
 
         undo = this.GetComponent<Undo>();
-        Cube = Cubes[0];
-        foreach (GameObject Cube in Cubes)
+  
+      /*  foreach (GameObject Cube in cubes)
         {
             Cube.GetComponent<Outline>().enabled = false;
 
-        }
+        }*/
         for (int i = 0; i < clearCubes.Length; i++)
         {
             clearPositions[i] = clearCubes[i].transform.position;
-
+            
         }
+      
     }
 
     // Update is called once per frame
@@ -47,16 +50,14 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < Cubes.Length; i++)
         {
             Vector3 cubePos = Cubes[i].transform.position;
+            print(Cubes[i].transform.position);
             for (int j = 0; j < clearPositions.Length; j++)
-            {/*if(clearPositions[j] != cubePos)
-                {
-                    print("clear");
-                    StartCoroutine(clearPlay());
-                }*/
+            {
+                print(clearPositions[j]);
                 if (clearPositions[j] == cubePos)
                 {
                     atLeastOneCubeInClearPosition = true;
-                    //  print("wrong!");
+                     print("wrong!");
 
                     break;
                 }
@@ -70,8 +71,9 @@ public class GameManager : MonoBehaviour
            {
             //print(atLeastOneCubeInClearPosition);
             StartCoroutine(clearPlay());
-   clear = true;
+            clear = true;
            }
+        print(atLeastOneCubeInClearPosition);
 
         /*  Cube = Cubes[currentCube];
           Cube.GetComponent<Outline>().enabled = true;

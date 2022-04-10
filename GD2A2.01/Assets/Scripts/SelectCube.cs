@@ -103,28 +103,28 @@ public class SelectCube : MonoBehaviour
         RaycastHit hit;
         if(Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity, playerCube)){
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * hit.distance, Color.red);
-            Debug.Log(hit.collider.gameObject.name);
+           // Debug.Log(hit.collider.gameObject.name);
             closestDown = hit.collider.gameObject;
             if (closestDown == null) { canDown = false; } else { canDown = true; }
         }
         if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.back), out hit, Mathf.Infinity, playerCube))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.back) * hit.distance, Color.green);
-            Debug.Log(hit.collider.gameObject.name);
+            //Debug.Log(hit.collider.gameObject.name);
             closestUp = hit.collider.gameObject;
             if (closestUp == null) { canUp = false; } else { canUp = true; }
         }
         if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.left), out hit, Mathf.Infinity, playerCube))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.left) * hit.distance, Color.yellow);
-            Debug.Log(hit.collider.gameObject.name);
+            //Debug.Log(hit.collider.gameObject.name);
             closestRight = hit.collider.gameObject;
             if (closestRight == null) { canRight = false; } else { canRight = true; }
         }
         if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.right), out hit, Mathf.Infinity, playerCube))
         {
             Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.right) * hit.distance, Color.blue);
-            Debug.Log(hit.collider.gameObject.name);
+            //Debug.Log(hit.collider.gameObject.name);
             closestLeft = hit.collider.gameObject;
             if (closestLeft == null) { canLeft = false; } else { canLeft = true; }
         }
@@ -193,10 +193,10 @@ public class SelectCube : MonoBehaviour
             this.transform.position = closestUp.transform.position;
             //whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, -1);
         }
-        print("right" + closestRight);
+      /*  print("right" + closestRight);
         print("left" + closestLeft);
         print("up" + closestUp);
-        print("down" + closestDown);
+        print("down" + closestDown);*/
         if (firstSpace == true && (Input.GetKeyDown(KeyCode.Space)))
         {
             canRight = false;

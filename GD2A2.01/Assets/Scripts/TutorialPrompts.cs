@@ -23,6 +23,17 @@ public class TutorialPrompts : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (firstSpace && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(spaceFalse());
+            firstSpace = false;
+            secondSpace = true;
+        }
+        else if (secondSpace && Input.GetKeyDown(KeyCode.Space))
+        {
+            StartCoroutine(enterTrue());
+            secondSpace = false;
+        }
         if (firstUp && (Input.GetKeyDown(KeyCode.UpArrow) | Input.GetKeyDown(KeyCode.DownArrow) | Input.GetKeyDown(KeyCode.LeftArrow) | Input.GetKeyDown(KeyCode.RightArrow)))
         {
             StartCoroutine(arrowsFalse());
@@ -34,17 +45,8 @@ public class TutorialPrompts : MonoBehaviour
             StartCoroutine(arrowsFalse());
             secondUp = false;
         }
-            if (firstSpace && Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(spaceFalse());
-            firstSpace = false;
-            secondSpace = true;
-        }
-            else if (secondSpace && Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(enterTrue());
-            secondSpace = false;
-        }
+      
+       
             if(firstEnter && Input.GetKeyDown(KeyCode.Return))
         {firstEnter = false;
             StartCoroutine(enterFalse())

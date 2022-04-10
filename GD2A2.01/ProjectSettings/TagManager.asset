@@ -11,6 +11,7 @@ TagManager:
   - HorizontalWalls
   - Green
   - Clear
+  - waypoint
   layers:
   - Default
   - TransparentFX
@@ -24,8 +25,8 @@ TagManager:
   - Select
   - PlayerCube
   - Ignore
-  - 
-  - 
+  - Platform
+  - Green
   - 
   - 
   - 

@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 public class WhiteCube : MonoBehaviour
 {
+    public bool occupied;
     public GameObject leftWall;
     public GameObject rightWall;
     public GameObject upWall;
     public GameObject downWall;
-
+    bool isBlue;
     public GameObject gameman;
     private Undo undo;
     bool canLeft;
@@ -22,14 +23,29 @@ public class WhiteCube : MonoBehaviour
     Vector3Int cubecell;
     public Tilemap tilemap;
     Vector3[] positions;
-
+    bool isPurple;
+    public LayerMask cubeMask;
+    public LayerMask greenMask;
     private void AddCommand(Command command)
     {
         var idx = undo.ExecuteCommand(command);
-
+        
     }
     private void Start()
     {
+        cubeMask = LayerMask.GetMask("PlayerCube") ;
+        greenMask = LayerMask.GetMask("Green");
+
+        var multiTag = this.gameObject.GetComponentInParent<MultiTag>();
+        if (multiTag != null && multiTag.HasTag("Purple"))
+        {         
+            isPurple = true;
+        }
+        if (multiTag != null && multiTag.HasTag("Blue"))
+        {
+            print("blue");
+            isBlue = true;
+        }
         undo = gameman.GetComponent<Undo>();
         cubes = GameObject.FindGameObjectsWithTag("Cube");
         cubePositions = new Vector3[cubes.Length];
@@ -60,10 +76,31 @@ public class WhiteCube : MonoBehaviour
         {
             if (Vector3.Distance(cubePositions[i], moveUp) < 0.0001) { canUp = false; }
             if (Vector3.Distance(cubePositions[i], moveDown) < 0.0001) { canDown = false; }
-            if (Vector3.Distance(cubePositions[i], moveRight) < 0.0001) { canRight = false; } 
+            if (Vector3.Distance(cubePositions[i], moveRight) < 0.0001) { canRight = false; }
             if (Vector3.Distance(cubePositions[i], moveLeft) < 0.0001) { canLeft = false; }
         }
-
+        LayerMask bothMask = greenMask | cubeMask;
+        if (isPurple)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.back), out hit, 1.4f, bothMask))
+            {
+                Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.back) * hit.distance, Color.red);
+                Debug.Log(hit.collider.name);
+                if (hit.collider.tag == "Green")
+                {
+                    occupied = false;
+                    Debug.Log("green");
+                    canUp = false;
+                }
+                if (hit.collider.tag != "Green")
+                {
+                    occupied = true;
+                }
+            }
+            else { occupied = false; }
+        }
+        print(occupied);
         /*for (int i = 0; i < positions.Length; i++)
         { if ( cubePositions[i])
             {
@@ -78,22 +115,49 @@ public class WhiteCube : MonoBehaviour
 
         if (canLeft && Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            whiteCube.transform.position = cellCenterPos + new Vector3Int(1, 1, 0);
+            if (isBlue)
+            {
+                whiteCube.transform.position = cellCenterPos + new Vector3Int(2, 1, 0);
 
+            }
+            else
+            {
+                whiteCube.transform.position = cellCenterPos + new Vector3Int(1, 1, 0);
+            }
         }
         if (canRight && (Input.GetKeyDown(KeyCode.RightArrow)))
         {
-            whiteCube.transform.position = cellCenterPos + new Vector3Int(-1, 1, 0);
+            if (isBlue)
+            {
+                whiteCube.transform.position = cellCenterPos + new Vector3Int(-2, 1, 0);
+
+            }
+            else {
+                whiteCube.transform.position = cellCenterPos + new Vector3Int(-1, 1, 0);
+            }
         }
         if (canDown && Input.GetKeyDown(KeyCode.DownArrow))
         {
-            whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, 1);
+            if (isBlue)
+            {
+                whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, 2);
+
+            }
+            else {
+                whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, 1);
+            }
         }
         if (canUp && Input.GetKeyDown(KeyCode.UpArrow))
         {
-            whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, -1);
-        }
+            if (isBlue)
+            {
+                whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, -2);
 
-
+            }
+            else { 
+                whiteCube.transform.position = cellCenterPos + new Vector3Int(0, 1, -1);
+        }}
+     
+       
     }
-}
+    }
